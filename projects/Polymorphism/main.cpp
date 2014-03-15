@@ -15,6 +15,7 @@ class CPolygon {
 
 class CRectangle: public CPolygon {
   public:
+    //cal area
     int area ()
       { return (width * height); }
   };

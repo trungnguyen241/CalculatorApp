@@ -1,4 +1,5 @@
-./Calculator.xcodeproj
+.DS_Store
+Calculator.xcodeproj
 ./Calculator/Base.lproj
 ./Calculator/Calculator-Info.plist
 ./Calculator/Calculator-Prefix.pch

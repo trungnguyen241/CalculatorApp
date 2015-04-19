@@ -180,11 +180,7 @@
 
 - (void)updateEquationString:(NSString *)appendString
 {
-    [self.brain formatInputString: appendString];
-    NSLog(@"input string = %@", [self.brain inputString]);
-    
-    NSString *equationString = [[self.brain inputString] componentsJoinedByString:@""];
-    NSLog(@"string = %@", equationString);
+    NSString *equationString = [self.brain formatInputString: appendString];
     
     [displayEquation setText: equationString];
 }

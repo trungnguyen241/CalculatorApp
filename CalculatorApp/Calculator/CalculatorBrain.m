@@ -55,43 +55,49 @@
     return self.operand;
 }
 
-- (void) formatInputString:(NSString *)appendString
+- (NSString *) formatInputString:(NSString *)appendString
 {
-    
-        //if ([self isContinuousOperatorPressed:appendString]) return;
-    if ([self isAnOperatorFollowBySingleOperator:appendString]) return;
-    if ([self isACButtonPressed:appendString]) return;
-    if ([self isDelButtonPressed:appendString]) return;
-
-    if ([self isContinuousOperatorPressed:appendString] ||
+    if ([self isAnOperatorFollowBySingleOperator:appendString] ||
+        [self isACButtonPressed:appendString] ||
+        [self isDelButtonPressed:appendString])
+    {
+            //do nothing
+    }
+    else if ([self isContinuousOperatorPressed:appendString] ||
         [self isContinuousDigitPressed:appendString])
     {
         [self.inputString removeLastObject];
         [self.inputString addObject: appendString];
-        return;
     }
-    
-    if ([self isSingleOperationPressed:appendString])
+    else if ([self isSingleOperationPressed:appendString])
     {
         [self.inputString removeLastObject];
         [self.inputString addObject: [NSString stringWithFormat:@"%g", self.operand]];
-        return;
     }
-   
-    if ([self isAnOperatorFirstPressed:appendString])
+    else if ([self isAnOperatorFirstPressed:appendString])
     {
         [self.inputString insertObject:[NSNumber numberWithDouble: self.operand] atIndex:0];
+        [self.inputString addObject: appendString];
+    }
+    else
+    {
+        [self.inputString addObject: appendString];
     }
     
-    [self.inputString addObject: appendString];
+    NSLog(@"input string = %@", self.inputString);
+    NSString *equationString = [self.inputString componentsJoinedByString:@""];
+    NSLog(@"string = %@", equationString);
+    
+    return equationString;
 
 }
 
 - (BOOL)isAnOperatorFirstPressed:(NSString *) appendString
 {
-    BOOL isFirstObjectInInputStringAnOperator = [self.operationList containsObject: [self.inputString firstObject]];
+    BOOL isFirstObjectInInputStringAnOperator = [self.operationList containsObject: appendString];
     
-    if (isFirstObjectInInputStringAnOperator)
+    if (([self.inputString count] == 0) &&
+        isFirstObjectInInputStringAnOperator)
     {
         NSLog(@"-->an operator is first pressed");
         return TRUE;
@@ -158,7 +164,7 @@
 
 - (BOOL)isDelButtonPressed:(NSString *) appendString
 {
-    if ([appendString isEqual:@"Del"])
+    if ([appendString isEqual:@"←"])
     {
         NSLog(@"-->Del is pressed");
         return TRUE;

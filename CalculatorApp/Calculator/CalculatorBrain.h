@@ -20,7 +20,7 @@
 
 - (double) performEqualOperation;
 
-- (void) formatInputString: (NSString *) appendString;
+- (NSString *) formatInputString: (NSString *) appendString;
 - (BOOL) isContinuousDigitPressed:(NSString *)appendString;
 - (BOOL)isContinuousOperatorPressed:(NSString *) appendString;
 - (BOOL)isAnOperatorFollowBySingleOperator:(NSString *) appendString;

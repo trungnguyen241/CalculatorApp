@@ -19,15 +19,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    [self setButtonBorder:collectionButtons];
+    [self setButtonBorder:collectionButtonsLandscape];
     
-    for (UIButton *button in collectionButtons)
+    [self willAnimateRotationToInterfaceOrientation: [[UIApplication sharedApplication] statusBarOrientation] duration:0.0];
+}
+
+-(void)setButtonBorder: (NSArray *) buttonsCollection
+{
+    for (UIButton *button in buttonsCollection)
     {
-            //NSLog(@"button: %@ tag: %ld", [[button titleLabel] text], (long)[button tag]);
         button.layer.borderWidth = .5f;
         button.layer.borderColor = [UIColor blackColor].CGColor;
     }
-  
-    [self willAnimateRotationToInterfaceOrientation: [[UIApplication sharedApplication] statusBarOrientation] duration:0.0];
 }
 
 - (void)viewDidUnload
@@ -37,54 +42,73 @@
 
 -(void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    double screenWidth = [UIScreen mainScreen].bounds.size.width;
-    double screenHeight = [UIScreen mainScreen].bounds.size.height;
-    double buttonWidth = screenWidth / 4;
-    double buttonHeight = 40;
-    double currentCordinateX = screenWidth ;
-    double currentCordinateY = screenHeight ;
-    
-        //NSLog(@"%f  %f", screenWidth, screenHeight);
-    
-    for (UIButton *button in collectionButtonsLandscape)
-    {
-        button.hidden = TRUE;
-    }
+    double screenWidth;
+    double screenHeight;
+    double buttonWidth;
+    double buttonHeight;
+    double currentCordinateX;
+    double currentCordinateY;
     
     if (toInterfaceOrientation == UIInterfaceOrientationPortrait ||
         toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown)
     {
-        for (UIButton *button in collectionButtons)
-        {
-            button.hidden = FALSE;
-            buttonWidth = screenWidth / 4;
-            
-            if (currentCordinateX == 0 || currentCordinateX == screenWidth)
-            {
-                currentCordinateX = screenWidth - buttonWidth;
-                currentCordinateY -= buttonHeight;
-            }
-            else
-            {
-                currentCordinateX -= buttonWidth;
-            }
-            
-                //NSLog(@"Button %@, x = %.0f,  y = %.0f", [[button titleLabel] text], currentCordinateX, currentCordinateY);
-            
-            button.frame = CGRectMake(currentCordinateX, currentCordinateY, buttonWidth, buttonHeight);
-        }
+        screenWidth = [UIScreen mainScreen].bounds.size.width;
+        screenHeight = [UIScreen mainScreen].bounds.size.height;
+        buttonWidth = screenWidth / 4;
+        buttonHeight = 40;
+        currentCordinateX = screenWidth;
+        currentCordinateY = screenHeight;
+        
+        [self hideButton:collectionButtonsLandscape];
+        
+        [self setButtonLocationIn:collectionButtons atCordX:currentCordinateX andCordY:currentCordinateY withButtonWidth:buttonWidth andButtonHeight:buttonHeight screenWidth:screenWidth andScreenHeight:screenHeight];
     }
-    else if (toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
-        toInterfaceOrientation == UIInterfaceOrientationLandscapeRight)
+    else
     {
         screenWidth = [UIScreen mainScreen].bounds.size.height;
         screenHeight = [UIScreen mainScreen].bounds.size.width;
-    }
+        buttonWidth = screenWidth / 10;
+        buttonHeight = 30;
+        currentCordinateX = screenWidth ;
+        currentCordinateY = screenHeight ;
     
+        [self hideButton:collectionButtons];
+        
+        [self setButtonLocationIn:collectionButtonsLandscape atCordX:currentCordinateX andCordY:currentCordinateY withButtonWidth:buttonWidth andButtonHeight:buttonHeight screenWidth:screenWidth andScreenHeight:screenHeight];
+    }
+
     displayNumber.frame = CGRectMake(screenWidth - 10, 50, -screenWidth, 30);
     displayEquation.frame = CGRectMake(screenWidth - 10, 100, -screenWidth, 20);
 
   }
+
+- (void) hideButton: (NSArray *)buttonsCollection
+{
+    for (UIButton *button in buttonsCollection)
+    {
+        button.hidden = TRUE;
+    }
+}
+
+- (void) setButtonLocationIn: (NSArray *)buttonsCollection atCordX :(double)cordX andCordY: (double) cordY withButtonWidth: (double)buttonWidth andButtonHeight:(double)buttonHeight screenWidth: (double)screenWidth andScreenHeight: (double)screenHeight
+{
+    for (UIButton *button in buttonsCollection)
+    {
+        button.hidden = FALSE;
+        
+        if (cordX == 0 || cordX == screenWidth)
+        {
+            cordX = screenWidth - buttonWidth;
+            cordY -= buttonHeight;
+        }
+        else
+        {
+            cordX -= buttonWidth;
+        }
+        
+        button.frame = CGRectMake(cordX, cordY, buttonWidth, buttonHeight);
+    }
+}
 
 - (void)didReceiveMemoryWarning
 {

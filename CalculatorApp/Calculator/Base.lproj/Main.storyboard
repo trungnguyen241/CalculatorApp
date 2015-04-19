@@ -37,13 +37,6 @@
                                     <action selector="digitPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="n8B-yW-wGU"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="T9N-VT-1Ww">
-                                <rect key="frame" x="15" y="41" width="285" height="66"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="77m-Ia-TnV">
                                 <rect key="frame" x="20" y="520" width="61" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -531,6 +524,13 @@
                                     <action selector="operationPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="235-dc-t5d"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="T9N-VT-1Ww">
+                                <rect key="frame" x="15" y="41" width="285" height="66"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <color key="tintColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -559,8 +559,6 @@
                         <outletCollection property="collectionButtons" destination="1b2-rv-M0h" id="WjN-JH-z14"/>
                         <outletCollection property="collectionButtonsLandscape" destination="L6E-1C-sV7" id="4Jy-fc-Ife"/>
                         <outletCollection property="collectionButtonsLandscape" destination="JLP-cl-B6t" id="b35-Ru-FuB"/>
-                        <outletCollection property="collectionButtonsLandscape" destination="L6E-1C-sV7" id="V1j-DF-H39"/>
-                        <outletCollection property="collectionButtonsLandscape" destination="JLP-cl-B6t" id="IyH-63-llM"/>
                         <outletCollection property="collectionButtonsLandscape" destination="ema-I6-ZaL" id="c7k-Is-T5t"/>
                         <outletCollection property="collectionButtonsLandscape" destination="77m-Ia-TnV" id="KGh-GB-AUu"/>
                         <outletCollection property="collectionButtonsLandscape" destination="Q2i-Cf-MjM" id="Z9k-TH-OeU"/>

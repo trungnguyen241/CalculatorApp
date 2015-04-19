@@ -22,6 +22,9 @@
   
 }
 
+- (void)setButtonBorder: (NSArray *)button;
+- (void) hideButton: (NSArray *)buttonsCollection;
+- (void) setButtonLocationIn: (NSArray *)buttonsCollection atCordX :(double)cordX andCordY: (double) cordY withButtonWidth: (double)buttonWidth andButtonHeight:(double)buttonHeight screenWidth: (double)screenWidth andScreenHeight: (double)screenHeight;
 
 - (IBAction) digitPressed:(UIButton *)sender;
 - (IBAction) operationPressed:(UIButton *)sender;

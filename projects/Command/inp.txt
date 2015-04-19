@@ -1,9 +1,0 @@
-mkdir /a
-mkdir /a/e
-creat /a/f1
-creat /a/f2
-creat /a/f3
-mkdir /b
-mkdir /b/c
-mkdir /b/c/d
-creat /b/f4

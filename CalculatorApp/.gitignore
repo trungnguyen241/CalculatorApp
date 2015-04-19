@@ -1,11 +1,27 @@
+# Created by https://www.gitignore.io
+### Xcode ###
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+*.moved-aside
+DerivedData
+*.xcuserstate
+
 ../.DS_Store
-.DS_Store
-#Calculator.xcodeproj
-#./Calculator/Base.lproj
-./Calculator/Calculator-Info.plist
-./Calculator/Calculator-Prefix.pch
-./Calculator/en.lproj
-./Calculator/Images.xcassets
-./Calculator/Note
-./CalculatorTests/CalculatorTests-Info.plist
-./CalculatorTests/CalculatorTests.m
+.DS_store
+
+#./Calculator/Calculator-Info.plist
+#./Calculator/Calculator-Prefix.pch
+#./Calculator/en.lproj
+#./Calculator/Images.xcassets
+#./Calculator/Note
+#./CalculatorTests/CalculatorTests-Info.plist
+#./CalculatorTests/CalculatorTests.m

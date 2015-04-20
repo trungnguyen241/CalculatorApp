@@ -293,7 +293,7 @@
             result *= operand;
         }
         else if ([operation isEqual:@"/"]) {
-            result /= operand;
+            result = round((result / operand) * 100.0) / 100.0;
         }
     }
     

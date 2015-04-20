@@ -16,6 +16,7 @@
         ViewController *calcViewController;
         CalculatorBrain *brain;
         UIView *view;
+        double result;
 }
 
 @end
@@ -29,6 +30,7 @@
     calcViewController = [[ViewController alloc] init];
     brain = [[CalculatorBrain alloc] init];
     view = calcViewController.view;
+    result = 0.0;
 }
 
 - (void)tearDown
@@ -60,14 +62,15 @@
     return formatString;
 }
 
--(double)calculateFromString
+-(double)calculateFromString: (NSArray *)inputString
 {
+    [self formatInputString:inputString];
     return [brain calculateFromEquationString];
 }
 
 -(void)testValidInputString
 {
-    NSArray *inputString = [[NSArray alloc] initWithObjects:@"2", @"+", @"3", @"x", @"4", @"-", @"5", nil];
+    NSArray *inputString = [@"2 + 3 x 4 - 5" componentsSeparatedByString: @" "];
  
     NSString *formatString = [self formatInputString:inputString];
     
@@ -76,7 +79,7 @@
 
 -(void)testAnOperatorFollowBySingleOperator
 {
-    NSArray *inputString = [[NSArray alloc] initWithObjects:@"2", @"+", @"±", @"3", @"x", @"4", nil];
+    NSArray *inputString = [@"2 + ± 3 x 4" componentsSeparatedByString: @" "];
    
     NSString *formatString = [self formatInputString:inputString];
     
@@ -85,7 +88,7 @@
 
 -(void)testACButtonPressed
 {
-    NSArray *inputString = [[NSArray alloc] initWithObjects:@"2", @"+", @"3", @"AC", @"4", @"+", @"5", nil];
+    NSArray *inputString = [@"2 + 3 AC 4 + 5" componentsSeparatedByString: @" "];
    
     NSString *formatString = [self formatInputString:inputString];
     
@@ -94,7 +97,7 @@
 
 -(void)testDelButtonPressed
 {
-    NSArray *inputString = [[NSArray alloc] initWithObjects:@"2", @"+", @"3", @"x", @"4", @"←", @"←", nil];
+    NSArray *inputString = [@"2 + 3 x 4 ← ←" componentsSeparatedByString: @" "];
   
     NSString *formatString = [self formatInputString:inputString];
     
@@ -103,7 +106,7 @@
 
 -(void)testContinuousOperatorPressed
 {
-    NSArray *inputString = [[NSArray alloc] initWithObjects:@"2", @"+", @"x", @"/", @"3", @"x", @"4", nil];
+    NSArray *inputString = [@"2 + x / 3 x 4" componentsSeparatedByString: @" "];
     
     NSString *formatString = [self formatInputString:inputString];
     
@@ -112,7 +115,7 @@
 
 -(void)testContinuousDigitPressed
 {
-    NSArray *inputString = [[NSArray alloc] initWithObjects:@"2", @"23", @"234", @"x", @"5", @"56", @"567", nil];
+    NSArray *inputString = [@"2 23 234 x 5 56 567"componentsSeparatedByString: @" "];
     
     NSString *formatString = [self formatInputString:inputString];
     
@@ -121,7 +124,7 @@
 
 -(void)testSingleOperationPressed
 {
-    NSArray *inputString = [[NSArray alloc] initWithObjects:@"2", @"%", @"+", @"3", @"x", @"4", @"±", @"%", nil];
+    NSArray *inputString = [@"2 % + 3 x 4 ± %" componentsSeparatedByString: @" "];
    
     NSString *formatString = [self formatInputString:inputString];
     
@@ -130,23 +133,70 @@
 
 -(void)testAnOperatorFirstPressed
 {
-    NSArray *inputString = [[NSArray alloc] initWithObjects:@"+", @"2", nil];
+    NSArray *inputString = [@"+ 2" componentsSeparatedByString: @" "];
     
     NSString *formatString = [self formatInputString:inputString];
     
     XCTAssertEqualObjects(formatString, @"0+2");
 }
 
--(void)testAddition
+-(void)testSimpleAddition
 {
-    double result;
-    NSArray *inputString = [[NSArray alloc] initWithObjects:@"2", @"+", @"3", @"+", @"34", nil];
+    NSArray *inputString = [@"2 + 3 + 34" componentsSeparatedByString: @" "];
+
+    result = [self calculateFromString:inputString];
     
-    NSString *formatString = [self formatInputString:inputString];
-    result = [self calculateFromString];
-    
-    XCTAssertEqualObjects(formatString, @"2+3+34");
     XCTAssertEqual(result, 39);
 
+}
+
+-(void)testSimpleSubtraction
+{
+    NSArray *inputString = [@"2 - 3 - 34" componentsSeparatedByString: @" "];
+    
+    result = [self calculateFromString:inputString];
+    
+    XCTAssertEqual(result, -35);
+    
+}
+
+-(void)testSimpleMultiplication
+{
+    NSArray *inputString = [@"2 x 3 x 34" componentsSeparatedByString: @" "];
+    
+    result = [self calculateFromString:inputString];
+    
+    XCTAssertEqual(result, 204);
+    
+}
+
+-(void)testSimpleDivision
+{
+    NSArray *inputString = [@"2 / 3 / 34" componentsSeparatedByString: @" "];
+    
+    result = [self calculateFromString:inputString];
+    
+    XCTAssertEqual(result, 0.02);
+    
+}
+
+-(void)testOperatorPrecedence
+{
+    NSArray *inputString = [@"1 + 2 x 3 + 4 - 6 / 3 + 2 x 3 x 4" componentsSeparatedByString: @" "];
+    
+    result = [self calculateFromString:inputString];
+    
+    XCTAssertEqual(result, 33);
+}
+
+-(void)testSingleOperator
+{
+    NSArray *inputString = [@"5 %" componentsSeparatedByString: @" "];
+    result = [self calculateFromString:inputString];
+    XCTAssertEqual(result, 0.05);
+    
+    inputString = [@"5 ±" componentsSeparatedByString: @" "];
+    result = [self calculateFromString:inputString];
+    XCTAssertEqual(result, -5);
 }
 @end

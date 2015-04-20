@@ -250,6 +250,9 @@
                                 <state key="normal" title="Rand">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="singleOperationPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="swH-zR-iRK"/>
+                                </connections>
                             </button>
                             <button opaque="NO" tag="16" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="lvv-Rg-Wk6">
                                 <rect key="frame" x="217" y="223" width="51" height="48"/>

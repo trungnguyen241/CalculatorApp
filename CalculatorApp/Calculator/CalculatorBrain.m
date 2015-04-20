@@ -18,7 +18,7 @@
         self.inputString = [[NSMutableArray alloc] init];
         
         self.operationList = [[NSArray alloc] initWithObjects:@"+", @"-", @"x", @"/", nil];
-        self.singleOperationList = [[NSArray alloc] initWithObjects:@"←", @"%", @"±", @"AC",  nil];
+        self.singleOperationList = [[NSArray alloc] initWithObjects:@"←", @"%", @"±", @"AC", @"Rand", nil];
     }
     return self;
 }
@@ -41,6 +41,10 @@
     else if([operation isEqual:@"%"])
     {
         self.operand = self.operand / 100;
+    }
+    else if ([operation isEqual:@"Rand"])
+    {
+        self.operand = arc4random() / pow(2, 32);
     }
 
     return self.operand;

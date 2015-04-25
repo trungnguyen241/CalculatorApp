@@ -1,5 +1,4 @@
 # Created by https://www.gitignore.io
-### Xcode ###
 build/
 *.pbxuser
 !default.pbxuser
@@ -17,6 +16,8 @@ DerivedData
 
 ../.DS_Store
 .DS_store
+
+Calculator.xcodeproj/project.xcworkspace/xcuserdata/Alex.xcuserdatad/UserInterfaceState.xcuserstate
 
 #./Calculator/Calculator-Info.plist
 #./Calculator/Calculator-Prefix.pch

@@ -96,7 +96,7 @@
     {
         button.hidden = FALSE;
         
-        if (cordX == 0 || cordX == screenWidth)
+        if ((int)cordX == 0 || (int)cordX == screenWidth)
         {
             cordX = screenWidth - buttonWidth;
             cordY -= buttonHeight;

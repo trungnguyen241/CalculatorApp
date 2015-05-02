@@ -194,19 +194,18 @@
     NSIndexSet *indexSet;
     double result = 0;
     
-    while ([self inputStringContain:@"x"] || [self inputStringContain:@"/"])
+    while ( [self inputStringContain:@"x"] || [self inputStringContain:@"/"] )
     {
         int lastIndex = 0;
         
         for (int operatorIndex = 1; operatorIndex < [self.inputString count]; operatorIndex +=2)
         {
-            if ([self objectAtIndex: operatorIndex equalOperator:@"x"] ||
-                [self objectAtIndex: operatorIndex equalOperator:@"/"])
+            BOOL isCurrentOperatorAMult = [self objectAtIndex: operatorIndex equalOperator:@"x"];
+            BOOL isCurrentOperatorADiv = [self objectAtIndex: operatorIndex equalOperator:@"/"];
+            
+            if ( isCurrentOperatorAMult || isCurrentOperatorADiv )
             {
-                for (lastIndex = operatorIndex; (lastIndex + 2 < [self.inputString count]) &&
-                     ([self objectAtIndex: (lastIndex + 2) equalOperator:@"x"] ||
-                      [self objectAtIndex: (lastIndex + 2) equalOperator:@"/"]);
-                     lastIndex += 2);
+                lastIndex = [self lastInterestedOperatorIndexFrom:operatorIndex];
                 
                 indexSet = [self createIndexSetFrom:operatorIndex to:lastIndex];
                 
@@ -215,18 +214,14 @@
                 result = [self calculateFromSubEquationString: subEquationString];
                 [subEquationString removeAllObjects];
                 
-                [self.inputString removeObjectsAtIndexes:indexSet];
-                NSLog(@"inputString = %@", self.inputString);
-                
-                [self.inputString insertObject: [NSNumber numberWithDouble:result] atIndex: (operatorIndex - 1)];
-                NSLog(@"inputString = %@", self.inputString);
+                [self replaceResult:result atIndex:operatorIndex fromIndexSet:indexSet];
                 
                 break;
             }
         }
     }
     
-    if (!([self inputStringContain:@"x"] || [self inputStringContain:@"/"]))
+    if (! ([self inputStringContain:@"x"] || [self inputStringContain:@"/"]))
     {
         subEquationString = self.inputString;
     }
@@ -237,6 +232,24 @@
     return result;
 }
 
+- (int)lastInterestedOperatorIndexFrom:(int)operatorIndex
+{
+    int lastIndex;
+    for (lastIndex = operatorIndex; (lastIndex + 2 < [self.inputString count]) &&
+         ([self objectAtIndex: (lastIndex + 2) equalOperator:@"x"] ||
+          [self objectAtIndex: (lastIndex + 2) equalOperator:@"/"]);
+         lastIndex += 2);
+    return lastIndex;
+}
+
+- (void)replaceResult:(double)result atIndex:(int)operatorIndex fromIndexSet:(NSIndexSet *)indexSet
+{
+    [self.inputString removeObjectsAtIndexes:indexSet];
+    NSLog(@"inputString = %@", self.inputString);
+    
+    [self.inputString insertObject: [NSNumber numberWithDouble:result] atIndex: (operatorIndex - 1)];
+    NSLog(@"inputString = %@", self.inputString);
+}
 
 - (BOOL) inputStringContain: (NSString *) anOperator
 {
